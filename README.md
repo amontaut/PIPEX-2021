@@ -9,7 +9,7 @@ Pipex graded 100 by my peers on November 29, 2021 with the norm 3.3.32. Works on
 ## To test it run :
 - `make`
 - `./pipex infile command1 command2 outfile`
-- Compare it with the real command `< file1 cmd1 | cmd2 > file2`
+- Compare it with the real command `< infile command1 | command2 > outfile`
 
 ## Here are some ressources I used : 
 - https://www.youtube.com/watch?v=ceNaZzEoUhk
