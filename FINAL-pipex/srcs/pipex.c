@@ -3,15 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amontaut <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: amontaut <amontaut@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 20:29:43 by amontaut          #+#    #+#             */
-/*   Updated: 2021/11/24 20:33:58 by amontaut         ###   ########.fr       */
+/*   Updated: 2021/11/30 19:29:58 by amontaut         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
 
+/*
+** exits properly in case of error and displays corresponding error msg
+*/
 void	ft_error(char *str, char *shell_path)
 {
 	free(shell_path);
@@ -21,6 +24,13 @@ void	ft_error(char *str, char *shell_path)
 	exit(EXIT_FAILURE);
 }
 
+/** 
+** We need to find the path of the shell. We find this path in the
+** environment variables (envp), and the variable of the shell is called
+** PATH. We search for this var amoung the multiples env variable and 
+** malloc it in the fonction count_malloc, then we assign it in the function
+** assign_malloc to the var shell_path.
+*/
 char	*count_malloc(char **envp, int *len, char *shell_path)
 {
 	int	i;
@@ -42,6 +52,13 @@ char	*count_malloc(char **envp, int *len, char *shell_path)
 	return (shell_path);
 }
 
+/** 
+** We need to find the path of the shell. We find this path in the
+** environment variables (envp), and the variable of the shell is called
+** PATH. We search for this var amoung the multiples env variable and 
+** malloc it in the fonction count_malloc, then we assign it in the function
+** assign_malloc to the var shell_path.
+*/
 char	*assign_malloc(char **envp, int len, char *shell_path)
 {
 	int	i;
@@ -69,6 +86,10 @@ char	*assign_malloc(char **envp, int len, char *shell_path)
 	return (shell_path);
 }
 
+/*
+** We create 2 child for each command, and process the commands in the fct
+** child_one and child_two
+*/
 void	launch_child(int *t, char **av, char **envp, char *shell_path)
 {
 	pid_t	child1;
@@ -95,6 +116,9 @@ void	launch_child(int *t, char **av, char **envp, char *shell_path)
 	waitpid(child2, &status, 0);
 }
 
+/** 
+** It all starts here
+**/
 int	main(int ac, char **av, char **envp)
 {
 	int		t[2];

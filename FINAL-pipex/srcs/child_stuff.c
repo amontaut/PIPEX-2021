@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   child_stuff.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amontaut <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: amontaut <amontaut@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 20:41:29 by amontaut          #+#    #+#             */
-/*   Updated: 2021/11/24 20:41:39 by amontaut         ###   ########.fr       */
+/*   Updated: 2021/11/30 19:29:44 by amontaut         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,11 @@ int	relative_path(char *cmd, char **mycmdargs, char **envp)
 	return (err);
 }
 
+/*
+** In the varaible PATH, there are several possibilities (seperated by : in 
+** the var PATH) than could work for our command. We try them all with a loop.
+** We need to add a / at the end so that it works (join). 
+*/
 int	path_from_shell(char *shell_path, char **mycmdargs, char **envp)
 {
 	char	*finalcmd;
@@ -47,6 +52,15 @@ int	path_from_shell(char *shell_path, char **mycmdargs, char **envp)
 	return (err);
 }
 
+/*
+** We execute our command (for example ls -la) with the fct execve. 
+** First arg = first part of the command we put in arg when we launched 
+** pipex (so ls) OR the var PATH; 2nd arg = char ** with all parts of 
+** the command (so ls -la) and last arg = env varibles. 
+** if the command starts with / we launch it as it is, if there is a ./
+** we launch it as an executable (relative path), otherwise we launch 
+** it normally with the var PATH. 
+*/
 int	child(char *cmd, char **envp, char *shell_path)
 {
 	char	**mycmdargs;
@@ -76,6 +90,11 @@ int	child(char *cmd, char **envp, char *shell_path)
 	exit(EXIT_FAILURE);
 }
 
+/*
+** We open the file of the command line, change the stdin from the
+** standard entry to f1 and change the stdout from the standard exit to
+** the pipe t[1]
+*/
 void	child_one(char **av, char **envp, char *shell_path, int *t)
 {
 	int	f1;
@@ -92,6 +111,11 @@ void	child_one(char **av, char **envp, char *shell_path, int *t)
 	close(f1);
 }
 
+/*
+** We open the file of the command line, change the stdin from the
+** standard entry to the pipe f[0] and change the stdout from the 
+** standard exit to the pipe t[1]
+*/
 void	child_two(char **av, char **envp, char *shell_path, int *t)
 {
 	int	f2;
