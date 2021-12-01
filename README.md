@@ -7,6 +7,7 @@ Pipex graded 100 by my peers on November 29, 2021 with the norm 3.3.32. Works on
 - SUBJECT-PIPEX-fr.pdf : the subject in french 🥖
 
 ## To test it run :
+- `cd FINAL-pipex`
 - `make`
 - `./pipex infile command1 command2 outfile`
 - Compare it with the real command `< infile command1 | command2 > outfile`
